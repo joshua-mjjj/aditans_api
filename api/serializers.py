@@ -63,8 +63,10 @@ class MentorProfileSeriaizer(serializers.ModelSerializer):
         model = MentorProfile
         fields = "__all__"
 
-
-
+class ClusterSeriaizer(serializers.ModelSerializer):
+    class Meta:
+        model = Cluster
+        fields = "__all__"
 
 
 

@@ -1,4 +1,4 @@
-# ADi-tans API
+# Adi-tans API
 
 # Environment Setup
 

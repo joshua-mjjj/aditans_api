@@ -7,7 +7,8 @@ from api.models import (
     User,
     ProjectType,
     Profile,
-    MentorProfile
+    MentorProfile,
+    Cluster
 )
 
 admin.site.site_header = "Sponsor"
@@ -16,3 +17,4 @@ admin.site.register(User)
 admin.site.register(ProjectType)
 admin.site.register(Profile)
 admin.site.register(MentorProfile)
+admin.site.register(Cluster)

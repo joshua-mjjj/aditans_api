@@ -131,6 +131,10 @@ class MentorProfile(TimeStampedModel):
     def __str__(self):
         return self.business_name
 
+class Cluster(models.Model):
+    cluster_supervisor = models.CharField(max_length=100, blank=True, null=True) # big
+    cluster_members = models.CharField(max_length=100, unique=True)
+
 
 
 
