@@ -12,15 +12,10 @@ from rest_framework_jwt.settings import api_settings
 
 GENDER_CHOICES = (("male", "Male"), ("female", "Female"))
 
-CLASSES_CHOICES = (
-    ("primary_one", "Primary one"), 
-    ("primary_two", "Primary two"),
-    ("primary_three", "Primary three"),
-    ("primary_four", "Primary four"),
-    ("primary_five", "Primary five"),
-    ("primary_six", "Primary six"),
-    ("primary_seven", "Primary seven"),
-    ("secondary", "High school"),
+ACCOUNT_TYPES = (
+    ("normal_user", "Normal User"), 
+    ("mentor", "Mentor"),
+    ("premium_normal_user", "Premium Normal User")
 )
 
 class UserManager(BaseUserManager):
@@ -56,7 +51,7 @@ class User(AbstractUser):
     first_name = models.CharField(max_length=32, blank=True, null=True)
     last_name = models.CharField(max_length=32, blank=True, null=True)
     phone_number = models.CharField(max_length=50, blank=True, null=True) # null=True
-    
+    account_type = models.CharField(max_length=32, choices=ACCOUNT_TYPES)
     is_staff = models.BooleanField("staff status", default=False)
     is_active = models.BooleanField("active", default=True)
     created_at = models.DateTimeField(auto_now_add=True)
@@ -71,6 +66,10 @@ class User(AbstractUser):
     @property
     def profiles(self):
         return Profile.objects.filter(owner=self)
+
+    @property
+    def mentor_profiles(self):
+        return MentorProfile.objects.filter(owner=self)
 
     @property
     def token(self):
@@ -114,7 +113,23 @@ class Profile(TimeStampedModel):
     def __str__(self):
         return self.id_name
 
+class MentorProfile(TimeStampedModel):
+    latitude = models.FloatField(max_length=9)
+    longitude = models.FloatField(max_length=9)
 
+    project_type = models.ForeignKey(
+        ProjectType, on_delete=models.CASCADE, blank=True, null=True
+    )
+    minimum_team = models.IntegerField()
+    maximum_team = models.IntegerField()
+    years_of_experience = models.CharField(max_length=10)
+    business_name = models.CharField(max_length=100)
+    profile_image = models.ImageField(blank=True, null=True, upload_to=upload_path)
+    
+    owner = models.ForeignKey(User, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.business_name
 
 
 

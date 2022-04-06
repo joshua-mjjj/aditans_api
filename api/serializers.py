@@ -18,15 +18,20 @@ class JWTSerializer(JSONWebTokenSerializer):
 class SignUpSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ("first_name", "last_name", "email", "username", "phone_number", "password")
+        fields = ("first_name", "last_name", "email", "account_type", "username", "phone_number", "password")
 
 
 class UserSerializer(serializers.ModelSerializer):
     profiles = serializers.SerializerMethodField()
+    mentor_profiles = serializers.SerializerMethodField()
 
     def get_profiles(self, obj):
         profiles = Profile.objects.filter(owner=obj)
         return ProfileSeriaizer(profiles, many=True).data
+
+    def get_mentor_profiles(self, obj):
+        profiles = MentorProfile.objects.filter(owner=obj)
+        return MentorProfileSeriaizer(profiles, many=True).data
 
     def to_representation(self, instance):
         rep = super(UserSerializer, self).to_representation(instance)
@@ -52,6 +57,13 @@ class ProfileSeriaizer(serializers.ModelSerializer):
     class Meta:
         model = Profile
         fields = "__all__"
+
+class MentorProfileSeriaizer(serializers.ModelSerializer):
+    class Meta:
+        model = MentorProfile
+        fields = "__all__"
+
+
 
 
 

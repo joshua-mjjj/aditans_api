@@ -71,6 +71,16 @@ class UserProfile(GenericAPIView):
         serializer = ProfileSeriaizer(profiles, many=True)
         return self.get_paginated_response(serializer.data)
 
+    # properties 
+    @action(detail=True, methods=["GET"])
+    def mentor_profiles(self, request, *args, **kwargs):
+        user = self.get_object()
+        queryset = MentorProfile.objects.filter(sponsor=user)
+        profiles = self.paginate_queryset(queryset)
+        serializer = MentorProfileSeriaizer(profiles, many=True)
+        return self.get_paginated_response(serializer.data)
+
+
 class ChangePasswordApi(GenericAPIView):
     serializer_class = ChangePasswordSerializer
 
@@ -103,4 +113,10 @@ class ProfileViewset(viewsets.ModelViewSet):
     permission_classes = (IsAuthenticated,)
     serializer_class = ProfileSeriaizer
     queryset = Profile.objects.all()
+
+class MentorProfileSeriaizer(viewsets.ModelViewSet):
+    permission_classes = (IsAuthenticated,)
+    serializer_class = MentorProfile
+    queryset = Profile.objects.all()
+
 
