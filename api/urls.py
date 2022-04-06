@@ -10,11 +10,13 @@ from api.views import (
     UserProfile,
     ChangePasswordApi,
     ProjectTypeList,
-    ProfileViewset
+    ProfileViewset,
+    MentorProfileViewset
 )
 
 router = DefaultRouter()
 router.register(r"profiles", ProfileViewset, basename="students")
+router.register(r"mentor-profiles", MentorProfileViewset, basename="mentor-profiles")
 
 schema_view = get_swagger_view(title="VIPPU API")
 

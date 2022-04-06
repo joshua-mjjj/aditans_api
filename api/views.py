@@ -136,7 +136,8 @@ class ProfileViewset(viewsets.ModelViewSet):
     serializer_class = ProfileSeriaizer
     queryset = Profile.objects.all()
 
-class MentorProfileSeriaizer(viewsets.ModelViewSet):
+class MentorProfileViewset(viewsets.ModelViewSet):
     permission_classes = (IsAuthenticated,)
-    serializer_class = MentorProfile
-    queryset = Profile.objects.all()
+    serializer_class = MentorProfileSeriaizer
+    queryset = MentorProfile.objects.all()
+
