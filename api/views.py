@@ -60,24 +60,23 @@ class UserProfile(GenericAPIView):
         user = request.user
         serializer = UserSerializer(user, many=False)
         account_type = serializer.data['account_type']
-        print(serializer.data['account_type'])
+        # print(serializer.data['account_type'])
         if account_type == 'normal_user':
-            cordinate_profile = serializer.data['profiles'][0] # got one of user's profile
-            cordinate_profile_lat = serializer.data['profiles'][0]['latitude']
-            cordinate_profile_lon = serializer.data['profiles'][0]['longitude']
-            profile_project_type = serializer.data['profiles'][0]['project_type'] 
-            # print(profile_project_type)
-            Cluster_Algorithmn(cordinate_profile_lat, cordinate_profile_lon, profile_project_type)
-            pass
+            for profile in serializer.data['profiles']:
+                cordinate_profile = profile # got one of user's profile
+                cordinate_profile_lat = profile['latitude']
+                cordinate_profile_lon = profile['longitude']
+                profile_project_type = profile['project_type'] 
+                # print(profile_project_type)
+                Cluster_Algorithmn(cordinate_profile_lat, cordinate_profile_lon, profile_project_type)
+               
+            # pass
             # get your cordinates ==> cordinate(lat, lon)
             # get you profile and try to cluster 
             # get other cordinates that have same location and investiment plan ==> get_neighbours(dataset)
             # form a cluster 
             # Let the mentors know of that cluster ==> Don't need mentors location
             # try to get profiles he can mentor.
-        elif account_type == 'mentor':
-            pass
-            # try to get a mentor
 
         return Response(serializer.data, status=status.HTTP_200_OK)
 

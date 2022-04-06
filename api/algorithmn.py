@@ -80,7 +80,7 @@ def Cluster_Algorithmn(latitude, longitude, profile_project_id):
 		neighbours = get_neighbours(dataset, cordinate, neighbours)
 	else:
 		neighbours = []
-	print(neighbours)
+	# print(neighbours)
 	# neighbours are sorted from nearest to farthest
 
 	result_serializer = list()
@@ -92,7 +92,7 @@ def Cluster_Algorithmn(latitude, longitude, profile_project_id):
 
 		result_serializer.append(serializer.data)
 		
-	print(result_serializer)
+	# print(result_serializer)
 
 	cluster_array = list()
 
