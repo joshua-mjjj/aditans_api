@@ -76,7 +76,8 @@ def Cluster_Algorithmn(latitude, longitude, profile_project_id):
 	# clients = ServiceProvider_Motor.objects.all().order_by('-id')
 	dataset = Profile.objects.filter(project_type=profile_project_id).values_list('latitude', 'longitude', 'id')
 
-	if len(dataset) >= 2:
+	if len(dataset) >= 3:
+		print("neighbours")
 		neighbours = get_neighbours(dataset, cordinate, neighbours)
 	else:
 		neighbours = []

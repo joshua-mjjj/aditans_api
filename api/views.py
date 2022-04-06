@@ -60,14 +60,14 @@ class UserProfile(GenericAPIView):
         user = request.user
         serializer = UserSerializer(user, many=False)
         account_type = serializer.data['account_type']
-        # print(serializer.data['account_type'])
+        print(serializer.data['account_type'])
         if account_type == 'normal_user':
             for profile in serializer.data['profiles']:
                 cordinate_profile = profile # got one of user's profile
                 cordinate_profile_lat = profile['latitude']
                 cordinate_profile_lon = profile['longitude']
                 profile_project_type = profile['project_type'] 
-                # print(profile_project_type)
+                print(profile_project_type)
                 Cluster_Algorithmn(cordinate_profile_lat, cordinate_profile_lon, profile_project_type)
                
             # pass
@@ -141,3 +141,7 @@ class MentorProfileViewset(viewsets.ModelViewSet):
     serializer_class = MentorProfileSeriaizer
     queryset = MentorProfile.objects.all()
 
+class ClusterViewset(viewsets.ModelViewSet):
+    permission_classes = (IsAuthenticated,)
+    serializer_class = ClusterSeriaizer
+    queryset = Cluster.objects.all()
